@@ -50,6 +50,7 @@ const resolvers = {
     games: () => games,
     game: (_, args) => games.find((g) => g.id === args.id),
     authors: () => authors,
+    author: (_, args) => authors.find((a) => a.id === args.id),
     reviews: () => reviews,
     review: (_, args) => reviews.find((r) => r.id === args.id),
   },
