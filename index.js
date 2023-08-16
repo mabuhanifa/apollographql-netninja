@@ -9,6 +9,13 @@ const port = process.env.PORT || 4000;
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send({
+    message: "welcome to graphql app",
+    url: `http://localhost:${port}/graphql`,
+  });
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 
