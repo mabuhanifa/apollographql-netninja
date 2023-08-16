@@ -1,4 +1,4 @@
-const { books, games, authors, reviews } = require("./_db");
+let { books, games, authors, reviews } = require("./_db");
 
 const typeDefs = `#graphql
   type Book {
