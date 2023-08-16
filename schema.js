@@ -64,6 +64,14 @@ const resolvers = {
       return reviews.filter((r) => r.author_id === parent.id);
     },
   },
+  Review: {
+    author(parent) {
+      return authors.find((g) => g.id === parent.author_id);
+    },
+    game(parent) {
+      return games.find((g) => g.id === parent.game_id);
+    },
+  },
 };
 
 module.exports = { typeDefs, resolvers };
