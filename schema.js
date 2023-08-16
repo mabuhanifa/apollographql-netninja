@@ -37,10 +37,16 @@ const typeDefs = `#graphql
    game(id: ID!): Game
    authors: [Author]
    author(id: ID!): Author
-}
+ }
  type Mutation{
+   addGame(game:AddGameInput!):Game
    deleteGame(id:ID!):[Game]
-}
+ }
+
+ input AddGameInput{
+   title: String!
+   platform: [String!]!
+ }
 `;
 
 const resolvers = {
@@ -79,6 +85,13 @@ const resolvers = {
     deleteGame(_, args) {
       games = games.filter((g) => g.id !== args.id);
       return games;
+    },
+    addGame(_, args) {
+      let game = {
+        ...args.game,
+        id: Math.floor(Math.random() * 10000).toString(),
+      };
+      games.push(game);
     },
   },
 };
