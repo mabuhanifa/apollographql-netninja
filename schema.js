@@ -42,7 +42,7 @@ const typeDefs = `#graphql
  type Mutation{
    addGame(game:AddGameInput!):Game
    deleteGame(id:ID!):[Game]
-   updateGame(id:ID!, edits:EditGameInput!):Game
+   updateGame(id:ID!, edits:EditGameInput):Game
  }
 
  input AddGameInput{
@@ -70,11 +70,13 @@ const resolvers = {
     reviews: () => reviews,
     review: (_, args) => reviews.find((r) => r.id === args.id),
   },
+
   Game: {
     reviews(parent) {
       return reviews.filter((r) => r.game_id === parent.id);
     },
   },
+
   Author: {
     reviews(parent) {
       return reviews.filter((r) => r.author_id === parent.id);
@@ -84,22 +86,34 @@ const resolvers = {
     author(parent) {
       return authors.find((a) => a.id === parent.author_id);
     },
+
     game(parent) {
       return games.find((g) => g.id === parent.game_id);
     },
   },
+
   Mutation: {
     deleteGame(_, args) {
       games = games.filter((g) => g.id !== args.id);
       return games;
     },
+
     addGame(_, args) {
       let game = {
         ...args.game,
         id: Math.floor(Math.random() * 10000).toString(),
       };
+
       games.push(game);
+
       return game;
+    },
+    updateGame(_, args) {
+      games = games.map((g) =>
+        g.id === args.id ? { ...g, ...args.edits } : g
+      );
+
+      return games.find((g) => g.id === args.id);
     },
   },
 };
