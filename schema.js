@@ -38,6 +38,9 @@ const typeDefs = `#graphql
    authors: [Author]
    author(id: ID!): Author
 }
+ type Mutation{
+   deleteGame(id:ID!):[Game]
+}
 `;
 
 const resolvers = {
@@ -66,10 +69,16 @@ const resolvers = {
   },
   Review: {
     author(parent) {
-      return authors.find((g) => g.id === parent.author_id);
+      return authors.find((a) => a.id === parent.author_id);
     },
     game(parent) {
       return games.find((g) => g.id === parent.game_id);
+    },
+  },
+  Mutation: {
+    deleteGame(_, args) {
+      games = games.filter((g) => g.id !== args.id);
+      return games;
     },
   },
 };
