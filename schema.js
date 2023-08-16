@@ -82,6 +82,7 @@ const resolvers = {
       return reviews.filter((r) => r.author_id === parent.id);
     },
   },
+
   Review: {
     author(parent) {
       return authors.find((a) => a.id === parent.author_id);
@@ -108,6 +109,7 @@ const resolvers = {
 
       return game;
     },
+
     updateGame(_, args) {
       games = games.map((g) =>
         g.id === args.id ? { ...g, ...args.edits } : g
